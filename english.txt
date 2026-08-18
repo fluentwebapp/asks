@@ -8,5 +8,6 @@ site6(url: reddit.com name: Reddit - The heart of the internet description: Redd
 site7(url: https://www.wikipedia.org/ name: Wikipedia description: Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation. tags: no)
 site8(url: www.mercadolivre.com.br name: Mercado Livre description: Compre produtos com Frete Grátis no mesmo dia no Mercado Livre Brasil. Encontre milhares de marcas e produtos a preços incríveis. tags mercado)
 site9(url: https://www.linkedin.com/ name: LinkedIn description: Work, or find one tags: escravo)
-site10(url: https://lista.mercadolivre.com.br/ford-focus-rebaixado-legalizado name: Ford Focus Rebaixado Legalizado description: Frete grátis no dia. Compre já Ford Focus Rebaixado Legalizado parcelado sem juros!)
-site11(url: https://es.pinterest.com/apezeiro/focus-rebaixado/ name: Focus Rebaixado - Pinterest description: Focus Rebaixado)
+site10(url: https://lista.mercadolivre.com.br/ford-focus-rebaixado-legalizado name: Ford Focus Rebaixado Legalizado description: Frete grátis no dia. Compre já Ford Focus Rebaixado Legalizado parcelado sem juros! tags: o)
+site11(url: https://es.pinterest.com/apezeiro/focus-rebaixado/ name: Focus Rebaixado - Pinterest description: Focus Rebaixado tags: o)
+site12(url: https://www.youtube.com/channel/UCv29ytb-v_Ph6QZOypGFyEw name: YouTube · André Young description: André Young the best youtuber ever tags: o)
