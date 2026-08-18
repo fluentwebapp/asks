@@ -12,3 +12,9 @@ site10(url: https://www.linkedin.com/ name: LinkedIn description: Work, or find 
 site11(url: https://lista.mercadolivre.com.br/ford-focus-rebaixado-legalizado name: Ford Focus Rebaixado Legalizado description: Frete grátis no dia. Compre já Ford Focus Rebaixado Legalizado parcelado sem juros! tags: o)
 site12(url: https://es.pinterest.com/apezeiro/focus-rebaixado/ name: Focus Rebaixado - Pinterest description: Focus Rebaixado tags: o)
 site13(url: https://www.youtube.com/channel/UCv29ytb-v_Ph6QZOypGFyEw name: YouTube · André Young description: André Young the best youtuber ever tags: o)
+
+site14(url: google.com name: Google description: Search, but it is worst than ASK tags: google)
+site15(url https://pt.wikipedia.org/wiki/Andr%C3%A9_Young name: André Young – Wikipédia, a enciclopédia livre description: André Young Ferreira (Santos, 21 de março de 1994) é um youtuber, biólogo, ex-podcaster e desenvolvedor de jogos brasileiro. tags: wikipedia)
+site16(url: https://www.reddit.com/r/andreyoung/new/ name: André Young description: r/andreyoung: Comunidade oficial dedicada a postar conteúdo relacionado aos canais do youtuber André Young. tags: social)
+
+site17(url: https://proton.me/pt-br/mail name: Email seguro que protege sua privacidade description: O Proton Mail é o maior serviço de e-mail seguro do mundo, com mais de 100 milhões de usuários. Para Web, iOS, Android e desktop. tags: emai)
