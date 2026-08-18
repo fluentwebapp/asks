@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ask</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .topbar {
+    padding: 12px 20px;
+    text-align: right;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topbar a {
+    color: #222;
+    text-decoration: none;
+    margin-left: 14px;
+    cursor: pointer;
+  }
+  .topbar a:hover { text-decoration: underline; }
+  .logo-link {
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .home {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    margin-top: -80px;
+  }
+  .logo {
+    font-size: 72px;
+    font-weight: 400;
+    margin-bottom: 24px;
+    letter-spacing: -2px;
+    user-select: none;
+  }
+  .logo span:nth-child(4n+1) { color: #4285f4; }
+  .logo span:nth-child(4n+2) { color: #ea4335; }
+  .logo span:nth-child(4n+3) { color: #fbbc04; }
+  .logo span:nth-child(4n+4) { color: #34a853; }
+
+  .searchbox {
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 6px 14px;
+    align-items: center;
+  }
+  .searchbox:hover, .searchbox:focus-within {
+    border-color: rgba(223,225,229,0);
+    box-shadow: 0 1px 6px rgba(32,33,36,.28);
+  }
+  .searchbox input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    font-size: 16px;
+    padding: 8px 0;
+    background: transparent;
+  }
+  .buttons {
+    margin-top: 28px;
+    display: flex;
+    gap: 10px;
+  }
+  .buttons button {
+    font: inherit;
+    font-size: 14px;
+    color: #3c4043;
+    background: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    padding: 9px 16px;
+    cursor: pointer;
+  }
+  .buttons button:hover {
+    border-color: #dadce0;
+    box-shadow: 0 1px 1px rgba(0,0,0,.1);
+  }
+  .buttons button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .results-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .results-header .logo-small {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .results-header .logo-small span:nth-child(4n+1) { color: #4285f4; }
+  .results-header .logo-small span:nth-child(4n+2) { color: #ea4335; }
+  .results-header .logo-small span:nth-child(4n+3) { color: #fbbc04; }
+  .results-header .logo-small span:nth-child(4n+4) { color: #34a853; }
+  .results-header .searchbox-small {
+    flex: 1;
+    max-width: 560px;
+    display: flex;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 5px 14px;
+    align-items: center;
+  }
+  .results-header .searchbox-small input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    font-size: 15px;
+    padding: 6px 0;
+    background: transparent;
+  }
+
+  .results {
+    max-width: 652px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
+  .stats { color: #70757a; font-size: 13px; margin-bottom: 18px; }
+  .result { margin-bottom: 24px; }
+  .result .url {
+    font-size: 13px;
+    color: #202124;
+    line-height: 1.3;
+  }
+  .result .url .host { color: #202124; }
+  .result .url .path { color: #5f6368; }
+  .result a.title {
+    font-size: 20px;
+    color: #1a0dab;
+    text-decoration: none;
+    line-height: 1.3;
+    display: inline-block;
+    margin-top: 2px;
+  }
+  .result a.title:visited { color: #681da8; }
+  .result a.title:hover { text-decoration: underline; }
+  .result .snippet {
+    font-size: 14px;
+    color: #4d5156;
+    line-height: 1.58;
+    margin-top: 4px;
+    word-wrap: break-word;
+  }
+  .result .snippet mark {
+    background: transparent;
+    font-weight: 700;
+    color: #4d5156;
+  }
+
+  .empty { color: #70757a; font-size: 14px; }
+
+  /* Index form */
+  .index-view {
+    max-width: 560px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+  .index-view h1 {
+    font-size: 22px;
+    font-weight: 400;
+    color: #202124;
+    margin: 0 0 18px;
+  }
+  .index-view label {
+    display: block;
+    font-size: 13px;
+    color: #5f6368;
+    margin: 14px 0 4px;
+  }
+  .index-view input, .index-view textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 14px;
+    padding: 9px 10px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    outline: none;
+  }
+  .index-view input:focus, .index-view textarea:focus {
+    border-color: #4285f4;
+  }
+  .index-view textarea { min-height: 140px; resize: vertical; }
+  .index-view .row {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .index-view button {
+    font: inherit;
+    font-size: 14px;
+    background: #4285f4;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    padding: 9px 18px;
+    cursor: pointer;
+  }
+  .index-view button.secondary {
+    background: #f8f9fa;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+  }
+  .index-view button:hover { opacity: 0.92; }
+  .index-view button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .indexed-list {
+    margin-top: 32px;
+    border-top: 1px solid #ebebeb;
+    padding-top: 18px;
+  }
+  .indexed-list h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #5f6368;
+    margin: 0 0 10px;
+  }
+  .indexed-list .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #f1f3f4;
+  }
+  .indexed-list .item a {
+    color: #1a0dab;
+    text-decoration: none;
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .indexed-list .item a:hover { text-decoration: underline; }
+  .indexed-list .item button {
+    background: none;
+    border: 0;
+    color: #5f6368;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 6px;
+  }
+  .indexed-list .item button:hover { color: #d93025; }
+
+  .github-list {
+    margin-top: 24px;
+    border-top: 1px solid #ebebeb;
+    padding-top: 18px;
+  }
+  .github-list h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #5f6368;
+    margin: 0 0 10px;
+  }
+  .github-list .file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #f1f3f4;
+  }
+  .github-list .file-item span {
+    color: #202124;
+    font-family: monospace;
+  }
+  .github-list .file-item button {
+    font: inherit;
+    font-size: 13px;
+    background: #34a853;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .github-list .file-item button:hover { opacity: 0.9; }
+  .github-list .file-item button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .msg {
+    font-size: 13px;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-radius: 4px;
+  }
+  .msg.success { background: #e6f4ea; color: #137333; }
+  .msg.error { background: #fce8e6; color: #c5221f; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="logo-link" id="nav-home">Ask</a>
+  <div>
+    <a id="nav-index">Index</a>
+  </div>
+</div>
+
+<div id="view-home" class="home">
+  <div class="logo" id="logo"></div>
+  <form class="searchbox" id="searchform">
+    <input type="text" id="q" autocomplete="off" autofocus placeholder="">
+  </form>
+  <div class="buttons">
+    <button type="submit" form="searchform">Search</button>
+    <button type="button" id="btn-index">Index stuff</button>
+  </div>
+</div>
+
+<div id="view-results" style="display:none">
+  <div class="results-header">
+    <div class="logo-small" id="logo-small"></div>
+    <form class="searchbox-small" id="searchform2">
+      <input type="text" id="q2" autocomplete="off">
+    </form>
+  </div>
+  <div class="results" id="results-body"></div>
+</div>
+
+<div id="view-index" class="index-view" style="display:none">
+  <h1>Index something</h1>
+
+  <form id="indexform">
+    <label for="f-title">Title</label>
+    <input id="f-title" type="text" required placeholder="My page">
+
+    <label for="f-url">URL</label>
+    <input id="f-url" type="text" required placeholder="http://localhost:8080/page">
+
+    <label for="f-content">Content</label>
+    <textarea id="f-content" required placeholder="The text that should be searchable..."></textarea>
+
+    <div class="row">
+      <button type="submit">Add to index</button>
+      <button type="button" class="secondary" id="btn-back">Back</button>
+    </div>
+  </form>
+
+  <div class="github-list" id="github-section">
+    <h2>Fetch from GitHub Repository</h2>
+    <div class="row">
+      <button type="button" id="btn-fetch-list">List available .txt files</button>
+    </div>
+    <div id="github-msg"></div>
+    <div id="github-files"></div>
+  </div>
+
+  <div class="indexed-list" id="indexed-list">
+    <h2>Currently Indexed</h2>
+  </div>
+</div>
+
+<script>
+  // FORCE CACHE CLEAR: If version changes, wipe local storage to avoid old data bugs
+  const APP_VERSION = "3.0-FINAL-TAGS";
+  if (localStorage.getItem("ask_app_version") !== APP_VERSION) {
+    localStorage.clear();
+    localStorage.setItem("ask_app_version", APP_VERSION);
+    console.log("Old data cleared for update.");
+  }
+
+  const WORD = "Ask";
+  function buildLogo(el) {
+    el.innerHTML = WORD.split("").map(c => `<span>${c}</span>`).join("");
+  }
+  buildLogo(document.getElementById("logo"));
+  buildLogo(document.getElementById("logo-small"));
+
+  const STORE = "ask_index_v1";
+  const load = () => JSON.parse(localStorage.getItem(STORE) || "[]");
+  const save = (data) => localStorage.setItem(STORE, JSON.stringify(data));
+
+  const views = {
+    home: document.getElementById("view-home"),
+    results: document.getElementById("view-results"),
+    index: document.getElementById("view-index"),
+  };
+  function show(name) {
+    Object.values(views).forEach(v => v.style.display = "none");
+    views[name].style.display = name === "home" ? "flex" : "block";
+    if (name === "index") {
+      renderIndexedList();
+      document.getElementById("github-files").innerHTML = "";
+      document.getElementById("github-msg").innerHTML = "";
+    }
+  }
+
+  // ----- NORMALIZATION ENGINE -----
+
+  function stripAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function normalizeText(text) {
+    if (!text) return [];
+    return stripAccents(text)
+      .toLowerCase()
+      .replace(/[^\w\s]/g, '')
+      .split(/\s+/)
+      .filter(w => w.length > 0);
+  }
+
+  // ----- SEARCH ENGINE -----
+
+  function search(query) {
+    const queryWords = normalizeText(query);
+    if (queryWords.length === 0) return [];
+
+    const entries = load();
+
+    const scored = entries.map(e => {
+      // Normalize all fields including TAGS now
+      const titleWords = normalizeText(e.title);
+      const contentWords = normalizeText(e.content);
+      const urlWords = normalizeText(e.url);
+      const tagWords = normalizeText(e.tags || ""); // Search in tags!
+
+      let score = 0;
+      let matchCount = 0;
+
+      for (const qWord of queryWords) {
+        let found = false;
+
+        // Title match (High priority)
+        if (titleWords.includes(qWord)) {
+          score += 10;
+          found = true;
+        }
+
+        // Content match (Medium priority)
+        if (contentWords.includes(qWord)) {
+          score += 5;
+          found = true;
+        }
+
+        // Tag match (Medium-Low priority - works but doesn't show)
+        if (tagWords.includes(qWord)) {
+          score += 4;
+          found = true;
+        }
+
+        // URL match (Low priority)
+        if (urlWords.includes(qWord)) {
+          score += 1;
+          found = true;
+        }
+
+        if (found) matchCount++;
+      }
+
+      // Bonus if ALL query words were found
+      if (matchCount === queryWords.length) {
+        score += 20;
+      }
+
+      return { e, score, matchCount };
+    })
+    .filter(x => x.score > 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      return b.matchCount - a.matchCount;
+    })
+    .map(x => x.e);
+
+    return scored;
+  }
+
+  function snippet(text, queryWords) {
+    if (!text) return "";
+
+    const normalizedText = stripAccents(text).toLowerCase();
+
+    let bestIndex = -1;
+    for (const word of queryWords) {
+      const idx = normalizedText.indexOf(word);
+      if (idx !== -1) {
+        if (bestIndex === -1 || idx < bestIndex) {
+          bestIndex = idx;
+        }
+      }
+    }
+
+    if (bestIndex === -1) {
+      return escapeHtml(text.slice(0, 160)) + "...";
+    }
+
+    const start = Math.max(0, bestIndex - 60);
+    const end = Math.min(text.length, bestIndex + 120);
+
+    let actualStart = start;
+    if (start > 0 && text[start] !== ' ') {
+      const lastSpace = text.lastIndexOf(' ', start);
+      if (lastSpace !== -1) actualStart = lastSpace + 1;
+    }
+
+    let slice = text.slice(actualStart, end);
+    if (actualStart > 0) slice = "... " + slice;
+    if (end < text.length) slice = slice + " ...";
+
+    return highlightNormalized(slice, queryWords);
+  }
+
+  function highlightNormalized(originalText, queryWords) {
+    const normOriginal = stripAccents(originalText).toLowerCase();
+    let resultHtml = "";
+
+    let matches = [];
+    for (const word of queryWords) {
+      let pos = 0;
+      while ((pos = normOriginal.indexOf(word, pos)) !== -1) {
+        matches.push({ start: pos, end: pos + word.length });
+        pos += word.length;
+      }
+    }
+
+    matches.sort((a, b) => a.start - b.start);
+
+    const merged = [];
+    for (const m of matches) {
+      if (merged.length === 0 || m.start > merged[merged.length - 1].end) {
+        merged.push(m);
+      } else {
+        merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, m.end);
+      }
+    }
+
+    let cursor = 0;
+    for (const m of merged) {
+      resultHtml += escapeHtml(originalText.slice(cursor, m.start));
+      resultHtml += "<mark>" + escapeHtml(originalText.slice(m.start, m.end)) + "</mark>";
+      cursor = m.end;
+    }
+    resultHtml += escapeHtml(originalText.slice(cursor));
+
+    return resultHtml;
+  }
+
+  function escapeHtml(s) {
+    if (!s) return "";
+    return s.replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+  }
+
+  function hostOf(url) {
+    try { return new URL(url).hostname; } catch { return url; }
+  }
+  function pathOf(url) {
+    try {
+      const u = new URL(url);
+      return u.pathname + u.search + u.hash;
+    } catch { return ""; }
+  }
+
+  function renderResults(query) {
+    const queryWords = normalizeText(query);
+    const results = search(query);
+    const box = document.getElementById("results-body");
+    document.getElementById("q2").value = query;
+
+    if (results.length === 0) {
+      box.innerHTML =
+        `<div class="stats">About 0 results (${(Math.random()*0.3+0.1).toFixed(2)} seconds)</div>` +
+        `<div class="empty">No results found for <b>${escapeHtml(query)}</b>.<br>` +
+        `Try different keywords or <a href="#" id="go-index" style="color:#1a0dab">add content</a>.</div>`;
+      const goIdx = document.getElementById("go-index");
+      if (goIdx) goIdx.onclick = (e) => { e.preventDefault(); show("index"); };
+      return;
+    }
+
+    let html = `<div class="stats">About ${results.length} results (${(Math.random()*0.3+0.1).toFixed(2)} seconds)</div>`;
+    for (const r of results) {
+      html += `
+        <div class="result">
+          <div class="url"><span class="host">${escapeHtml(hostOf(r.url))}</span><span class="path">${escapeHtml(pathOf(r.url))}</span></div>
+          <a class="title" href="${escapeHtml(r.url)}" target="_blank" rel="noopener">${escapeHtml(r.title)}</a>
+          <div class="snippet">${snippet(r.content, queryWords)}</div>
+        </div>`;
+    }
+    box.innerHTML = html;
+  }
+
+  document.getElementById("searchform").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const q = document.getElementById("q").value.trim();
+    if (!q) return;
+    renderResults(q);
+    show("results");
+  });
+
+  document.getElementById("searchform2").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const q = document.getElementById("q2").value.trim();
+    if (!q) return;
+    renderResults(q);
+  });
+
+  // ----- Navigation -----
+  document.getElementById("nav-home").onclick = () => {
+    document.getElementById("q").value = "";
+    show("home");
+  };
+  document.getElementById("logo-small").onclick = () => {
+    document.getElementById("q").value = "";
+    show("home");
+  };
+  document.getElementById("btn-index").onclick = () => show("index");
+  document.getElementById("nav-index").onclick = () => show("index");
+  document.getElementById("btn-back").onclick = () => show("home");
+  document.getElementById("logo").onclick = () => {
+    document.getElementById("q").value = "";
+    show("home");
+  };
+
+  // ----- Index manually -----
+  document.getElementById("indexform").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const title = document.getElementById("f-title").value.trim();
+    const url = document.getElementById("f-url").value.trim();
+    const content = document.getElementById("f-content").value.trim();
+    if (!title || !url || !content) return;
+    const data = load();
+    // Manual entries don't have tags by default in the form, but we can add an empty string
+    data.push({ id: Date.now() + "-" + Math.random().toString(36).slice(2,7), title, url, content, tags: "" });
+    save(data);
+    document.getElementById("f-title").value = "";
+    document.getElementById("f-url").value = "";
+    document.getElementById("f-content").value = "";
+    renderIndexedList();
+  });
+
+  function renderIndexedList() {
+    const data = load();
+    const box = document.getElementById("indexed-list");
+    if (data.length === 0) {
+      box.innerHTML = `<h2>Currently Indexed</h2><div class="empty">Nothing yet.</div>`;
+      return;
+    }
+    let html = `<h2>Currently Indexed (${data.length})</h2>`;
+    for (const item of data.slice().reverse()) {
+      html += `
+        <div class="item">
+          <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener" title="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+          <button data-id="${item.id}">remove</button>
+        </div>`;
+    }
+    box.innerHTML = html;
+    box.querySelectorAll("button[data-id]").forEach(b => {
+      b.onclick = () => {
+        const id = b.dataset.id;
+        save(load().filter(x => x.id !== id));
+        renderIndexedList();
+      };
+    });
+  }
+
+  // ----- Fetch from GitHub -----
+  const GITHUB_REPO = "fluentwebapp/asks";
+  const GITHUB_API = `https://api.github.com/repos/${GITHUB_REPO}/contents`;
+
+  document.getElementById("btn-fetch-list").addEventListener("click", async () => {
+    const btn = document.getElementById("btn-fetch-list");
+    const msgDiv = document.getElementById("github-msg");
+    const filesDiv = document.getElementById("github-files");
+
+    btn.textContent = "Loading...";
+    btn.disabled = true;
+    msgDiv.innerHTML = "";
+    filesDiv.innerHTML = "";
+
+    try {
+      const resp = await fetch(GITHUB_API);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const items = await resp.json();
+
+      const txtFiles = items.filter(f => f.name.endsWith(".txt") && f.type === "file");
+      if (txtFiles.length === 0) {
+        msgDiv.innerHTML = `<div class="msg error">No .txt files found in the repository.</div>`;
+        return;
+      }
+
+      let html = `<h2>Choose a file to load</h2>`;
+      for (const file of txtFiles) {
+        html += `
+          <div class="file-item">
+            <span>${escapeHtml(file.name)}</span>
+            <button data-url="${file.download_url}" data-name="${escapeHtml(file.name)}">Load this file</button>
+          </div>`;
+      }
+      filesDiv.innerHTML = html;
+
+      filesDiv.querySelectorAll("button[data-url]").forEach(b => {
+        b.onclick = async () => {
+          b.textContent = "Loading...";
+          b.disabled = true;
+          try {
+            const fileResp = await fetch(b.dataset.url);
+            if (!fileResp.ok) throw new Error(`HTTP ${fileResp.status}`);
+            const text = await fileResp.text();
+            const entries = parseIndexFile(text);
+
+            const data = load();
+            const existingUrls = new Set(data.map(e => e.url));
+            let added = 0;
+
+            for (const entry of entries) {
+              if (!existingUrls.has(entry.url)) {
+                data.push({ ...entry, id: Date.now() + "-" + Math.random().toString(36).slice(2,7) });
+                existingUrls.add(entry.url);
+                added++;
+              }
+            }
+            save(data);
+            renderIndexedList();
+            msgDiv.innerHTML = `<div class="msg success">Successfully added ${added} new entries from ${b.dataset.name}.</div>`;
+            b.textContent = "Loaded";
+          } catch (err) {
+            msgDiv.innerHTML = `<div class="msg error">Error loading file: ${err.message}</div>`;
+            b.textContent = "Load this file";
+            b.disabled = false;
+          }
+        };
+      });
+
+    } catch (err) {
+      msgDiv.innerHTML = `<div class="msg error">Error fetching repository: ${err.message}</div>`;
+    } finally {
+      btn.textContent = "List available .txt files";
+      btn.disabled = false;
+    }
+  });
+
+  // SUPER ROBUST PARSER: Handles missing colons, missing parentheses, etc.
+  function parseIndexFile(text) {
+    const entries = [];
+    const lines = text.split("\n");
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.toLowerCase().startsWith("name:")) continue;
+
+      if (/^site\d+/i.test(trimmed)) {
+        // Remove the "site123(" part and any trailing ")"
+        let inner = trimmed.replace(/^site\d+\s*\(\s*/i, "").replace(/\)\s*$/, "");
+
+        // If there was no parenthesis, inner might still have garbage at the end, but we rely on keywords
+
+        const urlMatch = inner.match(/url:\s*(\S+)/i);
+        const nameMatch = inner.match(/name:\s*(.+?)(?:\s+description:|\s+tags[:\s]|$)/i);
+
+        // Description goes until "tags" appears (with or without colon)
+        const descMatch = inner.match(/description:\s*(.+?)(?:\s+tags[:\s]|$)/i);
+
+        // Tags: capture everything after the word "tags" (optional colon) until end of line
+        const tagsMatch = inner.match(/tags[:\s]*(.+)$/i);
+
+        if (urlMatch && nameMatch) {
+          const urlRaw = urlMatch[1].trim();
+          const name = nameMatch[1].trim();
+          const description = descMatch ? descMatch[1].trim() : "";
+          const tags = tagsMatch ? tagsMatch[1].trim() : "";
+
+          let fullUrl = urlRaw;
+          if (!fullUrl.startsWith("http://") && !fullUrl.startsWith("https://")) {
+            fullUrl = "https://" + fullUrl;
+          }
+
+          entries.push({
+            title: name,
+            url: fullUrl,
+            content: description,
+            tags: tags
+          });
+        }
+      }
+    }
+    return entries;
+  }
+</script>
+</body>
+</html>
