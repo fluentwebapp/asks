@@ -15,6 +15,11 @@ site13(url: https://www.youtube.com/channel/UCv29ytb-v_Ph6QZOypGFyEw name: YouTu
 
 site14(url: google.com name: Google description: Search, but it is worst than ASK tags: google)
 site15(url https://pt.wikipedia.org/wiki/Andr%C3%A9_Young name: André Young – Wikipédia, a enciclopédia livre description: André Young Ferreira (Santos, 21 de março de 1994) é um youtuber, biólogo, ex-podcaster e desenvolvedor de jogos brasileiro. tags: wikipedia, )
-site16(url: https://www.reddit.com/r/andreyoung/new/ name: André Young description: r/andreyoung: Comunidade oficial dedicada a postar conteúdo relacionado aos canais do youtuber André Young. tags: social, medias, media)
+site16(url: https://www.reddit.com/r/andreyoung/new/ name: Reddit - André Young description: r/andreyoung: Comunidade oficial dedicada a postar conteúdo relacionado aos canais do youtuber André Young. tags: social, medias, media)
 
 site17(url: https://proton.me/pt-br/mail name: Email seguro que protege sua privacidade description: O Proton Mail é o maior serviço de e-mail seguro do mundo, com mais de 100 milhões de usuários. Para Web, iOS, Android e desktop. tags: emai, e-mail, caixa de entrada, inbox, imbox)
+
+site18(url: https://www.minecraft.net/en-us name: Welcome to the Minecraft Official Site | Minecraft description: Explore new gaming adventures, accessories, & merchandise on the Minecraft Official Site tags: explore, games, minecraft, mainecraft, miencraft)
+site19(url: https://minecraft.wiki/ name: Minecraft Wiki description: Minecraft is a 3D sandbox adventure game developed by Mojang Studios tags: minecraft, wike, wiki)
+
+site20(url: https://www.google.com/gmail/about/signup_complete.html name Gmail description: Gmail is email that's intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access. tags: email, gmail, e-mail, g mail, mail)
