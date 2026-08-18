@@ -3,3 +3,5 @@ site2(url: github.com name: GitHub description: Share your code. tags: github, a
 site3(url: translate.google.com name: Google Translate description: O serviço do Google, oferecido sem custo financeiro, traduz instantaneamente palavras, frases e páginas da Web do português para mais de cem outros idiomas. tags: shutup)
 site4(url: chatgpt.com name: ChatGPT description: Use ChatGPT to answer questions, write, create images, complete work, and code—all in one place. Get started for free or download the app. tags: idk)
 site5(url: fluentwebapp.github.io/fluent/ name: Fluent. description: Aprenda Inglês facilmente atravéz da Fluent, sem assinatura. tags: fluent)
+site5(url: devdocs.io/c/ name: C documentation description: C API documentation with instant search, offline support, keyboard shortcuts, mobile version, and more. tags: itdontmakeanychange)
+site6(url: reddit.com name: Reddit - The heart of the internet description: Reddit is where millions of people gather for conversations about the things they care about, in over 100000 subreddit communities. tags: reddit)
