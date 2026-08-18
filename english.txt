@@ -6,7 +6,7 @@ site4(url: chatgpt.com name: ChatGPT description: Use ChatGPT to answer question
 site5(url: fluentwebapp.github.io/fluent/ name: Fluent. description: Aprenda Inglês facilmente atravéz da Fluent, sem assinatura. tags: fluent, ingles, aprender, gratis)
 site6(url: devdocs.io/c/ name: C documentation description: C API documentation with instant search, offline support, keyboard shortcuts, mobile version, and more. tags: itdontmakeanychange)
 site7(url: reddit.com name: Reddit - The heart of the internet description: Reddit is where millions of people gather for conversations about the things they care about, in over 100000 subreddit communities. tags: social, social media, rede social)
-site8(url: https://www.wikipedia.org/ name: Wikipedia description: Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation. tags: search, pesquisa, learn, information, informação)
+site8(url: https://www.wikipedia.org/ name: Wikipedia description: Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation. tags: search, pesquisa, learn, information, informação, wiki)
 site9(url: www.mercadolivre.com.br name: Mercado Livre description: Compre produtos com Frete Grátis no mesmo dia no Mercado Livre Brasil. Encontre milhares de marcas e produtos a preços incríveis. tags: mercado, compra, comprar, carros, eletronicos, celular, celulares)
 site10(url: https://www.linkedin.com/ name: LinkedIn description: Work, or find one tags: escravo)
 site11(url: https://lista.mercadolivre.com.br/ford-focus-rebaixado-legalizado name: Ford Focus Rebaixado Legalizado description: Frete grátis no dia. Compre já Ford Focus Rebaixado Legalizado parcelado sem juros! tags: sem juros, frete gratis, comprar)
@@ -14,7 +14,7 @@ site12(url: https://es.pinterest.com/apezeiro/focus-rebaixado/ name: Focus Rebai
 site13(url: https://www.youtube.com/channel/UCv29ytb-v_Ph6QZOypGFyEw name: YouTube · André Young description: André Young the best youtuber ever tags: watch, videos, video, biologo, biologia)
 
 site14(url: google.com name: Google description: Search, but it is worst than ASK tags: google)
-site15(url https://pt.wikipedia.org/wiki/Andr%C3%A9_Young name: André Young – Wikipédia, a enciclopédia livre description: André Young Ferreira (Santos, 21 de março de 1994) é um youtuber, biólogo, ex-podcaster e desenvolvedor de jogos brasileiro. tags: wikipedia, )
+site15(url https://pt.wikipedia.org/wiki/Andr%C3%A9_Young name: André Young – Wikipédia, a enciclopédia livre description: André Young Ferreira (Santos, 21 de março de 1994) é um youtuber, biólogo, ex-podcaster e desenvolvedor de jogos brasileiro. tags: wikipedia, wiki)
 site16(url: https://www.reddit.com/r/andreyoung/new/ name: Reddit - André Young description: r/andreyoung: Comunidade oficial dedicada a postar conteúdo relacionado aos canais do youtuber André Young. tags: social, medias, media)
 
 site17(url: https://proton.me/pt-br/mail name: Email seguro que protege sua privacidade description: O Proton Mail é o maior serviço de e-mail seguro do mundo, com mais de 100 milhões de usuários. Para Web, iOS, Android e desktop. tags: emai, e-mail, caixa de entrada, inbox, imbox)
